@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+    Name: Jennifer Schumacher
+    Description: Palindrome Checker and Secret Message Validator with interactive elements, a great user experience, and background sound.
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker & Secret Message</title>
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Internal CSS for basic styling */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #4682b4;
+        }
+        .input-container {
+            margin: 20px 0;
+        }
+        .result {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .secret-message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #32CD32;
+        }
+    </style>
+</head>
+<body>
+    <h1>Palindrome Checker & Secret Message Validator</h1>
+    <!-- Container for input and result display -->
+    <div class="input-container">
+        <!-- Form for user inputs -->
+        <form id="userForm">
+            <input type="text" id="firstName" placeholder="First Name">
+            <input type="text" id="lastName" placeholder="Last Name">
+            <input type="text" id="zipCode" placeholder="Zip Code">
+            <input type="text" id="userInput" placeholder="Enter a word or phrase">
+            <button type="button" onclick="validateInputs()">Submit</button>
+        </form>
+    </div>
+    <!-- Display the result of validation and palindrome check -->
+    <div class="result" id="result"></div>
+    <div class="buttons">
+        <!-- Button for user to continue -->
+        <button onclick="resetInput()">Try Another</button>
+    </div>
+    <!-- Add an image for visual appeal -->
+    <img src="https://i.ibb.co/dkyZrTJ/kayak-fishing-paddle-paddling-outdoor-recreation-aruba-6cf9c59ebc04c325678edfebd18e861a.png" alt="Palindrome Image" width="300">
+    <!-- Hidden secret message -->
+    <div class="secret-message hidden" id="secretMessage">
+        You've found a secret! Kayak is a Palindrome!
+    </div>
+    <!-- Background sound -->
+   <audio autoplay loop>
+    <source src="Water_Churning.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+    <!-- JavaScript to handle the palindrome checking, validation, and user interaction -->
+    <script>
+        // Function to check if the input string is a palindrome
+        function checkPalindrome() {
+            // Get the user input
+            const input = document.getElementById('userInput').value;
+            // Remove spaces and convert to lower case for comparison
+            const cleanedInput = input.replace(/\s+/g, '').toLowerCase();
+            // Reverse the cleaned input
+            const reversedInput = cleanedInput.split('').reverse().join('');
+            // Check if the cleaned input is the same as the reversed input
+            if (cleanedInput === reversedInput) {
+                // If they are the same, it's a palindrome
+                document.getElementById('result').innerText = `"${input}" is a palindrome!`;
+            } else {
+                // If not, it's not a palindrome
+                document.getElementById('result').innerText = `"${input}" is not a palindrome.`;
+            }
+        }
+
+        // Function to validate user inputs
+        function validateInputs() {
+            // Get user inputs
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const zipCode = document.getElementById('zipCode').value;
+            
+            // Combine first and last name with a space
+            const fullName = `${firstName} ${lastName}`;
+            
+            // Validate the length of the combined name
+            if (fullName.length > 20) {
+                alert('Full name must be 20 characters or less.');
+                return;
+            }
+            
+            // Validate the zip code to ensure it has exactly 5 digits
+            if (!/^\d{5}$/.test(zipCode)) {
+                alert('Zip code must be exactly 5 digits.');
+                return;
+            }
+            
+            // If both validations pass, show the secret message and check palindrome
+            document.getElementById('secretMessage').classList.remove('hidden');
+            checkPalindrome();
+        }
+
+        // Function to reset the input fields for another check
+        function resetInput() {
+            document.getElementById('firstName').value = '';
+            document.getElementById('lastName').value = '';
+            document.getElementById('zipCode').value = '';
+            document.getElementById('userInput').value = '';
+            document.getElementById('result').innerText = '';
+            document.getElementById('secretMessage').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
